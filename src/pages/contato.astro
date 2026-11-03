@@ -62,7 +62,7 @@ const e = site.empresa;
               <label for="area">Área de atuação</label>
               <select id="area" name="area">
                 <option value="">Selecione</option>
-                {site.areas.map((a) => <option>{a}</option>)}
+                {site.areas.map((a) => <option>{a.nome}</option>)}
                 <option>Outra</option>
               </select>
             </div>

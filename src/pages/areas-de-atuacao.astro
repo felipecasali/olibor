@@ -12,8 +12,11 @@ import site from '../data/site.json';
       <ul class="areas-grid">
         {site.areas.map((a, i) => (
           <li data-reveal>
-            <span class="num">{String(i + 1).padStart(2, '0')}</span>
-            <h2>{a}</h2>
+            <img src={`/img/areas/${a.foto}-640.webp`} srcset={`/img/areas/${a.foto}-640.webp 640w, /img/areas/${a.foto}.webp 1200w`} sizes="(max-width: 700px) 100vw, 400px" alt={a.alt} width="640" height="427" loading="lazy" decoding="async" />
+            <div class="areas-grid__label">
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <h2>{a.nome}</h2>
+            </div>
           </li>
         ))}
       </ul>
@@ -23,9 +26,11 @@ import site from '../data/site.json';
   <CTABanner title="Seu segmento não está na lista?" text="Desenvolvemos vedadores para máquinas e equipamentos em geral. Consulte-nos." />
 </Base>
 <style>
-  .areas-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); border-top: 1px solid var(--border-default); border-left: 1px solid var(--border-default); }
-  .areas-grid li { border-right: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); padding: var(--space-10) var(--space-8); min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; transition: background var(--dur-base) var(--ease-standard); }
-  .areas-grid li:hover { background: var(--surface-warm-soft); }
+  .areas-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: var(--space-6); }
+  .areas-grid li { background: var(--surface-card); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); box-shadow: var(--shadow-card); overflow: hidden; transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard); }
+  .areas-grid li:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
+  .areas-grid img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: saturate(.85); }
+  .areas-grid__label { display: flex; align-items: baseline; gap: var(--space-4); padding: var(--space-5) var(--space-6); }
   .areas-grid span { font-family: var(--font-condensed); font-weight: 700; color: var(--color-accent); letter-spacing: .06em; }
-  .areas-grid h2 { font-size: clamp(28px, 2.6vw, 36px); text-transform: uppercase; letter-spacing: .01em; }
+  .areas-grid h2 { font-size: clamp(24px, 2.2vw, 30px); text-transform: uppercase; letter-spacing: .01em; }
 </style>

@@ -25,15 +25,15 @@
     { "label": "Contato", "href": "/contato" }
   ],
   "areas": [
-    "Petróleo e Gás",
-    "Metalúrgica",
-    "Máquinas Pesadas",
-    "Manutenção",
-    "Farmacêutica",
-    "Vedação Industrial",
-    "Bebidas",
-    "Saneamento",
-    "Agricultura"
+    { "nome": "Petróleo e Gás", "foto": "petroleo-e-gas", "alt": "Plataforma de petróleo offshore ao pôr do sol" },
+    { "nome": "Metalúrgica", "foto": "metalurgica", "alt": "Interior de usina siderúrgica com estruturas e dutos" },
+    { "nome": "Máquinas Pesadas", "foto": "maquinas-pesadas", "alt": "Escavadeira carregando caminhão fora de estrada em mineração" },
+    { "nome": "Manutenção", "foto": "manutencao", "alt": "Casa de máquinas com tubulações isoladas, bombas e reservatórios" },
+    { "nome": "Farmacêutica", "foto": "farmaceutica", "alt": "Sistema de purificação de água em aço inox para indústria farmacêutica" },
+    { "nome": "Vedação Industrial", "foto": "vedacao-industrial", "alt": "Detalhe de parafuso e porca em flange metálico" },
+    { "nome": "Bebidas", "foto": "bebidas", "alt": "Esteira de envase com garrafas de suco em fábrica de bebidas" },
+    { "nome": "Saneamento", "foto": "saneamento", "alt": "Técnico operando válvula em estação de tratamento de efluentes" },
+    { "nome": "Agricultura", "foto": "agricultura", "alt": "Trator com implemento em campo arado" }
   ],
   "clientes": ["Avibras", "JSL Hidráulica Pneumática", "Good Seal"]
 }

@@ -1,0 +1,87 @@
+---
+import site from '../data/site.json';
+---
+<div class="carousel" data-carousel>
+  <div class="container carousel__head">
+    <div data-reveal style="max-width:58ch">
+      <span class="eyebrow">Áreas de atuação</span>
+      <h2 class="section-title">Onde nossas peças trabalham.</h2>
+    </div>
+    <div class="carousel__nav">
+      <button type="button" class="carousel__btn" data-prev aria-label="Área anterior">←</button>
+      <button type="button" class="carousel__btn" data-next aria-label="Próxima área">→</button>
+    </div>
+  </div>
+  <ul class="carousel__track" data-track aria-label="Áreas de atuação" tabindex="0">
+    {site.areas.map((a, i) => (
+      <li class="carousel__slide" aria-label={`${i + 1} de ${site.areas.length}: ${a.nome}`}>
+        <a href="/areas-de-atuacao" class="carousel__card">
+          <img
+            src={`/img/areas/${a.foto}-640.webp`}
+            srcset={`/img/areas/${a.foto}-640.webp 640w, /img/areas/${a.foto}.webp 1200w`}
+            sizes="(max-width: 700px) 82vw, 420px"
+            alt={a.alt} width="640" height="427" loading="lazy" decoding="async"
+          />
+          <span class="carousel__veil" aria-hidden="true"></span>
+          <span class="carousel__n num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="carousel__name">{a.nome}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <div class="container"><div class="carousel__bar" aria-hidden="true"><span data-bar></span></div></div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const bar = root.querySelector<HTMLElement>('[data-bar]');
+    const step = () => (track.querySelector('.carousel__slide') as HTMLElement).offsetWidth + 20;
+    const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    const go = (dir: number) => {
+      if (dir > 0 && atEnd()) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+    };
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(-1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(1));
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      const vis = track.clientWidth / track.scrollWidth;
+      if (bar) { bar.style.width = `${vis * 100}%`; bar.style.transform = `translateX(${max > 0 ? (track.scrollLeft / max) * ((1 - vis) / vis) * 100 : 0}%)`; }
+    };
+    track.addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync);
+    sync();
+    // Avanço automático: só com animações ligadas, pausa em hover/foco/fora de tela
+    let paused = false, visible = false;
+    const motionOn = () => !document.documentElement.classList.contains('no-motion') && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    ['mouseenter', 'focusin', 'touchstart'].forEach((e) => root.addEventListener(e, () => (paused = true), { passive: true }));
+    ['mouseleave', 'focusout'].forEach((e) => root.addEventListener(e, () => (paused = false)));
+    new IntersectionObserver(([en]) => (visible = en.isIntersecting)).observe(root);
+    setInterval(() => { if (visible && !paused && motionOn()) go(1); }, 4500);
+  });
+</script>
+
+<style>
+  .carousel__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); margin-bottom: 40px; }
+  .carousel__nav { display: flex; gap: var(--space-2); flex-shrink: 0; }
+  .carousel__btn { width: 48px; height: 48px; border-radius: var(--radius-sm); border: 1px solid var(--border-default); background: #fff; color: var(--olibor-green-900); font-size: 20px; cursor: pointer; transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast); }
+  .carousel__btn:hover { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+  .carousel__track {
+    list-style: none; margin: 0; padding: 0 max(var(--gutter), calc((100vw - var(--layout-max)) / 2 + var(--gutter)));
+    display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(var(--gutter), calc((100vw - var(--layout-max)) / 2 + var(--gutter)));
+    scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .carousel__track::-webkit-scrollbar { display: none; }
+  .carousel__slide { flex: 0 0 min(82vw, 420px); scroll-snap-align: start; }
+  .carousel__card { position: relative; display: block; aspect-ratio: 4 / 5; border-radius: var(--radius-md); overflow: hidden; background: var(--olibor-green-900); color: #fff; }
+  .carousel__card:hover { text-decoration: none; color: #fff; }
+  .carousel__card img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); transition: transform var(--dur-slow) var(--ease-standard); }
+  .carousel__card:hover img { transform: scale(1.03); }
+  .carousel__veil { position: absolute; left: 0; right: 0; bottom: 0; height: 30%; background: var(--scrim-image-strong); }
+  .carousel__n { position: absolute; top: 20px; left: 22px; font-family: var(--font-condensed); font-weight: 700; font-size: 15px; letter-spacing: .06em; background: var(--color-accent); padding: 4px 8px; border-radius: var(--radius-sm); }
+  .carousel__name { position: absolute; left: 22px; right: 22px; bottom: 22px; font-family: var(--font-condensed); font-weight: 600; font-size: clamp(26px, 2.4vw, 32px); line-height: 1.05; text-transform: uppercase; letter-spacing: .01em; }
+  .carousel__bar { margin-top: 28px; height: 2px; background: var(--border-default); overflow: hidden; }
+  .carousel__bar span { display: block; height: 2px; background: var(--color-accent); transition: transform 120ms linear; }
+  @media (max-width: 600px) { .carousel__nav { display: none; } }
+</style>

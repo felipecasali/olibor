@@ -6,6 +6,7 @@
 - Materiais: `src/data/materiais.json` (`min`/`max` em °C; `null` = sob especificação).
 - Páginas: `src/pages/*.astro`. Nova página → adicionar ao `nav` em `site.json` se for para o menu.
 - Imagens: `public/img/`, sempre otimizadas (WebP, ≤ 1600 px de largura).
+- Áreas de atuação (`site.json` → `areas`): cada item tem `nome`, `foto` e `alt`. A foto fica em `public/img/areas/<foto>.webp` (1200 px) e `<foto>-640.webp` (640 px). Alimenta o carrossel da home (`AreasCarousel.astro`), a página Áreas de atuação e o select do formulário.
 
 ## Regras do design system Olibor
 - Cores, espaçamentos, raios e sombras só via variáveis de `src/styles/tokens.css`. Não editar esse arquivo à mão: ele é cópia do design system.
