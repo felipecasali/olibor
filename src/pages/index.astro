@@ -5,6 +5,7 @@ import AreasCarousel from '../components/AreasCarousel.astro';
 import site from '../data/site.json';
 import produtos from '../data/produtos.json';
 import materiais from '../data/materiais.json';
+import cert from '../data/certificacoes.json';
 
 const anos = new Date().getFullYear() - site.empresa.fundacao;
 const numeros = [
@@ -16,7 +17,7 @@ const numeros = [
 const fmtTemp = (m: { min: number | null; max: number | null }) =>
   m.min === null ? 'Sob especificação' : `${m.min} °C a +${m.max} °C`.replace('-', '−');
 ---
-<Base title="Home" description="Olibor Borrachas e Retentores: fabricante de retentores, raspadores, gaxetas, anéis O'Ring e jogos Chevron desde 1979. Peças sob especificação, amostra ou desenho. NBR ISO 9001:2015.">
+<Base title="Home" description="Olibor Borrachas e Retentores: fabricante de retentores, raspadores, gaxetas, anéis O'Ring e jogos Chevron desde 1979. Peças sob especificação, amostra ou desenho. Certificada ISO 9001:2015.">
 
   <!-- Hero -->
   <section class="hero">
@@ -126,7 +127,7 @@ const fmtTemp = (m: { min: number | null; max: number | null }) =>
         <span class="eyebrow">Certificações</span>
         <h2 class="section-title">Sistema de gestão da qualidade {site.empresa.certificacao}.</h2>
         <span class="rule"></span>
-        <p class="lead" style="margin-top:28px">A certificação assegura aos nossos clientes produtos de qualidade e eficiência, com processos controlados do desenvolvimento à entrega.</p>
+        <p class="lead" style="margin-top:28px">Certificado nº {cert.vigente.numero}, emitido pela RINA e reconhecido pela rede IQNET. Certificada desde {cert.vigente.primeiraCertificacao}; validade até {cert.vigente.validade.split('-').reverse().join('/')}.</p>
         <a class="link-arrow" href="/certificacoes">Ver certificações →</a>
       </div>
       <div data-reveal>

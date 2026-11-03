@@ -2,37 +2,84 @@
 import Base from '../layouts/Base.astro';
 import PageBanner from '../components/PageBanner.astro';
 import CTABanner from '../components/CTABanner.astro';
-import site from '../data/site.json';
+import cert from '../data/certificacoes.json';
+
+const v = cert.vigente;
+const br = (iso: string) => iso.split('-').reverse().join('/');
+const dados = [
+  ['Norma', v.norma],
+  ['Organismo certificador', v.organismo],
+  ['Certificado nº', v.numero],
+  ['Registro IQNET', v.iqnet],
+  ['Validade', br(v.validade)],
+];
 ---
-<Base title="Certificações" description="A Olibor Borrachas e Retentores possui sistema de gestão da qualidade certificado NBR ISO 9001:2015.">
-  <PageBanner title="Certificações" trail={[{ label: 'Certificações' }]} lead="Qualidade assegurada por sistema de gestão certificado." />
+<Base title="Certificações" description={`A Olibor Borrachas e Retentores possui Sistema de Gestão da Qualidade certificado ${v.norma} pela RINA, certificado nº ${v.numero}, válido até ${br(v.validade)}.`}>
+  <PageBanner title="Certificações" trail={[{ label: 'Certificações' }]} lead={`Sistema de Gestão da Qualidade certificado ${v.norma} desde ${v.primeiraCertificacao}.`} />
 
   <section class="section">
     <div class="container grid-2">
       <div data-reveal>
-        <span class="eyebrow">Sistema de gestão da qualidade</span>
-        <h2 class="section-title">{site.empresa.certificacao}</h2>
+        <span class="eyebrow">Certificado vigente</span>
+        <h2 class="section-title">Sistema de Gestão da Qualidade {v.norma}</h2>
         <span class="rule"></span>
-        <p class="lead" style="margin-top:28px">A Olibor Borrachas e Retentores Ltda possui certificação {site.empresa.certificacao}, que assegura aos nossos clientes produtos de qualidade e eficiência.</p>
-        <p>O certificado pode ser solicitado à nossa equipe comercial.</p>
-        <a class="btn btn--primary" href={`mailto:${site.empresa.email}?subject=Certificado%20ISO%209001`}>Solicitar certificado</a>
+        <p class="lead" style="margin-top:28px">{v.escopo}</p>
+        <table class="spec-table" style="margin-top:32px">
+          <caption class="sr-only">Dados do certificado</caption>
+          <tbody>
+            {dados.map(([k, val]) => <tr><th scope="row">{k}</th><td>{val}</td></tr>)}
+          </tbody>
+        </table>
+        <p class="muted" style="font-size:var(--fs-xs);margin-top:var(--space-4)">{v.acreditacao}. A validade pode ser confirmada em <a href={v.verificacao} target="_blank" rel="noopener">rina.org</a>.</p>
       </div>
-      <div class="cert" data-reveal role="img" aria-label={`Selo ${site.empresa.certificacao}`}>
-        <span class="cert__tag">Certificado</span>
-        <span class="cert__std">ISO 9001</span>
-        <span class="cert__ver num">NBR ISO 9001:2015</span>
-        <span class="cert__org">{site.empresa.razaoSocial}</span>
+      <div class="docs">
+        {v.documentos.map((d) => (
+          <a class="doc" href={`/img/certificados/${d.arquivo}.webp`} target="_blank" rel="noopener" data-reveal>
+            <img src={`/img/certificados/${d.arquivo}-560.webp`} alt={d.alt} width="560" height="792" loading="lazy" decoding="async" />
+            <span class="doc__label">{d.titulo}<span class="doc__open">Ampliar ↗</span></span>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <CTABanner title="Qualidade certificada em cada peça." />
+  <section class="section section--green">
+    <div class="container policy" data-reveal>
+      <span class="eyebrow">Política da Qualidade</span>
+      <blockquote>
+        <p>{cert.politica.texto}</p>
+      </blockquote>
+      <span class="policy__date">São Paulo, {cert.politica.data}</span>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <span class="eyebrow">Histórico de certificação</span>
+      <table class="spec-table" style="margin-top:16px">
+        <caption class="sr-only">Ciclos de certificação</caption>
+        <thead><tr><th scope="col">Ciclo</th><th scope="col">Organismo</th><th scope="col">Norma</th><th scope="col">Registro</th></tr></thead>
+        <tbody>
+          <tr><td>{v.emissao.slice(0, 4)} – {v.validade.slice(0, 4)} <span class="badge badge--green">Vigente</span></td><td>RINA / CISQ</td><td>{v.norma}</td><td>{v.numero} · IQNET {v.iqnet}</td></tr>
+          {cert.historico.map((h) => <tr><td>{h.periodo}</td><td>{h.organismo}</td><td>{h.norma}</td><td>{h.numero}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <CTABanner title="Qualidade certificada em cada peça." text="Solicite o certificado ou a documentação de qualidade para homologação de fornecedor." label="Falar com a Olibor" href="/contato#orcamento" />
 </Base>
 <style>
-  .cert { aspect-ratio: 4 / 3; background: var(--surface-inverse); border-radius: var(--radius-md); padding: var(--space-10); display: flex; flex-direction: column; justify-content: flex-end; gap: var(--space-2); color: #fff; position: relative; overflow: hidden; }
-  .cert::before { content: ""; position: absolute; top: var(--space-10); left: var(--space-10); width: 64px; height: 3px; background: var(--color-accent); }
-  .cert__tag { font-family: var(--font-condensed); font-weight: 700; font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--olibor-sand-100); }
-  .cert__std { font-family: var(--font-condensed); font-weight: 700; font-size: clamp(56px, 7vw, 96px); line-height: .95; }
-  .cert__ver { font-family: var(--font-condensed); font-weight: 600; font-size: 22px; }
-  .cert__org { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); color: rgba(255,255,255,.76); }
+  .spec-table th[scope="row"] { background: var(--surface-subtle); color: var(--text-heading); width: 42%; font-size: var(--fs-xs); border-top: 1px solid var(--border-hairline); }
+  .docs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+  .doc { display: block; background: #fff; border: 1px solid var(--border-hairline); border-radius: var(--radius-md); box-shadow: var(--shadow-card); overflow: hidden; color: var(--text-heading); transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard); }
+  .doc:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); text-decoration: none; color: var(--text-heading); }
+  .doc img { width: 100%; height: auto; aspect-ratio: 560 / 792; box-shadow: var(--shadow-inset-media); }
+  .doc__label { display: flex; flex-direction: column; gap: 4px; padding: var(--space-4); border-top: 1px solid var(--border-hairline); font-family: var(--font-condensed); font-weight: 600; font-size: var(--fs-body); }
+  .doc__open { font-size: var(--fs-xs); letter-spacing: var(--ls-button); text-transform: uppercase; color: var(--color-accent); }
+  @media (max-width: 480px) { .docs { grid-template-columns: 1fr; } }
+  .policy { max-width: 900px; }
+  .policy blockquote { margin: var(--space-4) 0 0; padding: 0; }
+  .policy blockquote p { font-family: var(--font-condensed); font-weight: 500; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.3; color: #fff; margin: 0; }
+  .policy__date { display: block; margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); color: rgba(255,255,255,.72); }
 </style>

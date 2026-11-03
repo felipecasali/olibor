@@ -1,0 +1,46 @@
+{
+  "vigente": {
+    "norma": "ISO 9001:2015",
+    "organismo": "RINA Brasil Serviços Técnicos Ltda",
+    "acreditacao": "Acreditação CGCRE (OCS 0052) · Membro IAF · CISQ / IQNET",
+    "numero": "45459/24/I",
+    "iqnet": "IT-152580",
+    "certificadaDesde": "2021-10-22",
+    "emissao": "2024-08-16",
+    "revisao": "2024-11-06",
+    "validade": "2027-08-20",
+    "escopo": "Fabricação e comercialização de retentores, gaxetas, anéis O'Ring, jogos de Chevron, coxins, diafragmas e vedações de borracha em geral.",
+    "verificacao": "https://www.rina.org",
+    "documentos": [
+      {
+        "titulo": "Certificado RINA nº 45459/24/I",
+        "arquivo": "rina-iso9001-45459-24",
+        "alt": "Certificado RINA nº 45459/24/I — ISO 9001:2015 — Olibor Borrachas e Retentores Ltda, válido até 20/08/2027"
+      },
+      {
+        "titulo": "Certificado IQNET nº IT-152580",
+        "arquivo": "iqnet-it-152580",
+        "alt": "Certificado IQNET nº IT-152580 — ISO 9001:2015 — emitido por CISQ/RINA, válido até 20/08/2027"
+      }
+    ],
+    "primeiraCertificacao": "2018"
+  },
+  "historico": [
+    {
+      "periodo": "2021 – 2024",
+      "organismo": "Fundação Vanzolini",
+      "norma": "NBR ISO 9001:2015",
+      "numero": "SQ-23611 · IQNet BR-SQ-23611"
+    },
+    {
+      "periodo": "2018 – 2021",
+      "organismo": "Fundação Vanzolini",
+      "norma": "NBR ISO 9001:2015",
+      "numero": "SQ-20376"
+    }
+  ],
+  "politica": {
+    "texto": "A Olibor Borrachas e Retentores Ltda fornece soluções em vedações e artefatos de borrachas fabricando peças que atendam especificações, prazos, necessidades dos clientes e requisitos aplicáveis, focando na melhoria contínua de seus processos, nas metas, objetivos estabelecidos e satisfação das partes interessadas.",
+    "data": "22 de dezembro de 2016"
+  }
+}

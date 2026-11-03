@@ -14,7 +14,7 @@
     },
     "horario": "8:00 às 17:00, de segunda a sexta",
     "mapaUrl": "https://www.google.com/maps/search/?api=1&query=R.+Gen.+Augusto+Imbassa%C3%AD,+192+-+Cachoeirinha,+S%C3%A3o+Paulo+-+SP,+02617-020",
-    "certificacao": "NBR ISO 9001:2015"
+    "certificacao": "ISO 9001:2015"
   },
   "nav": [
     { "label": "A Olibor", "href": "/a-olibor" },

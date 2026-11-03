@@ -3,6 +3,7 @@
 ## Como editar conteúdo
 - Texto institucional, contatos, menu, áreas e clientes: `src/data/site.json`.
 - Produtos: `src/data/produtos.json` (cada item gera `/produtos/<slug>`; o slug não deve mudar depois de publicado).
+- Certificações: `src/data/certificacoes.json` (certificado vigente, histórico, Política da Qualidade). Imagens em `public/img/certificados/` (1400 px + versão `-560`). Na renovação: mover o vigente para `historico`, atualizar `vigente` e as imagens. Não publicar imagens de certificados vencidos.
 - Materiais: `src/data/materiais.json` (`min`/`max` em °C; `null` = sob especificação).
 - Páginas: `src/pages/*.astro`. Nova página → adicionar ao `nav` em `site.json` se for para o menu.
 - Imagens: `public/img/`, sempre otimizadas (WebP, ≤ 1600 px de largura).
