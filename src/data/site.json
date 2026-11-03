@@ -1,0 +1,39 @@
+{
+  "empresa": {
+    "nome": "Olibor",
+    "razaoSocial": "Olibor Borrachas e Retentores LTDA",
+    "fundacao": 1979,
+    "telefones": ["(11) 2234-9111", "(11) 2234-9112"],
+    "email": "olibor@olibor.com.br",
+    "endereco": {
+      "rua": "R. Gen. Augusto Imbassaí, 192",
+      "bairro": "Cachoeirinha",
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "cep": "02617-020"
+    },
+    "horario": "8:00 às 17:00, de segunda a sexta",
+    "mapaUrl": "https://www.google.com/maps/search/?api=1&query=R.+Gen.+Augusto+Imbassa%C3%AD,+192+-+Cachoeirinha,+S%C3%A3o+Paulo+-+SP,+02617-020",
+    "certificacao": "NBR ISO 9001:2015"
+  },
+  "nav": [
+    { "label": "A Olibor", "href": "/a-olibor" },
+    { "label": "Produtos", "href": "/produtos" },
+    { "label": "Materiais", "href": "/materiais" },
+    { "label": "Áreas de atuação", "href": "/areas-de-atuacao" },
+    { "label": "Certificações", "href": "/certificacoes" },
+    { "label": "Contato", "href": "/contato" }
+  ],
+  "areas": [
+    "Petróleo e Gás",
+    "Metalúrgica",
+    "Máquinas Pesadas",
+    "Manutenção",
+    "Farmacêutica",
+    "Vedação Industrial",
+    "Bebidas",
+    "Saneamento",
+    "Agricultura"
+  ],
+  "clientes": ["Avibras", "JSL Hidráulica Pneumática", "Good Seal"]
+}

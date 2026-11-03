@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import CTABanner from '../components/CTABanner.astro';
+import site from '../data/site.json';
+import produtos from '../data/produtos.json';
+import materiais from '../data/materiais.json';
+
+const anos = new Date().getFullYear() - site.empresa.fundacao;
+const numeros = [
+  { value: anos, suffix: '+', label: 'anos fabricando vedadores em São Paulo' },
+  { value: produtos.length, suffix: '', label: 'famílias de vedadores em linha' },
+  { value: materiais.length, suffix: '', label: 'famílias de elastômeros formulados' },
+  { value: site.areas.length, suffix: '', label: 'segmentos industriais atendidos' },
+];
+const fmtTemp = (m: { min: number | null; max: number | null }) =>
+  m.min === null ? 'Sob especificação' : `${m.min} °C a +${m.max} °C`.replace('-', '−');
+const areasLoop = [...site.areas, ...site.areas];
+---
+<Base title="Home" description="Olibor Borrachas e Retentores: fabricante de retentores, raspadores, gaxetas, anéis O'Ring e jogos Chevron desde 1979. Peças sob especificação, amostra ou desenho. NBR ISO 9001:2015.">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__photo" data-parallax aria-hidden="true"></div>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <span class="hero__kicker" data-reveal>Desde {site.empresa.fundacao} — São Paulo/SP</span>
+      <h1 class="hero__title">
+        <span data-reveal>Vedadores e peças</span>
+        <span data-reveal>técnicas de borracha</span>
+        <span data-reveal class="hero__title-alt">sob medida.</span>
+      </h1>
+      <p class="hero__lead" data-reveal>Fabricamos retentores, raspadores, gaxetas, anéis O'Ring e jogos Chevron para manutenção industrial, móbil, agrícola, saneamento, metalúrgica e máquinas pesadas. Sob especificação, amostra ou desenho.</p>
+      <div class="btn-row hero__actions" data-reveal>
+        <a class="btn btn--accent btn--lg" href="/contato#orcamento">Solicitar orçamento</a>
+        <a class="btn btn--on-image btn--lg" href="/produtos">Ver linha de produtos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Números -->
+  <section class="section--green stats">
+    <div class="container stats__grid">
+      {numeros.map((n) => (
+        <div data-reveal>
+          <div class="stats__value num"><span data-count={n.value}>{n.value}</span><span class="stats__suffix">{n.suffix}</span></div>
+          <div class="stats__label">{n.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- A Olibor -->
+  <section class="section" id="a-olibor">
+    <div class="container grid-2 about">
+      <div data-reveal>
+        <span class="eyebrow">A Olibor</span>
+        <h2 class="section-title">Ferramentaria própria, prazo combinado e quantidade livre.</h2>
+        <span class="rule"></span>
+        <p class="lead" style="margin-top:28px">Nossa principal atividade é a fabricação de vedadores para manutenção industrial, móbil, agrícola e de máquinas e equipamentos em geral. Estamos aptos também a solucionar, em conjunto com nossos clientes, suas necessidades específicas.</p>
+        <a class="link-arrow" href="/a-olibor">Nossa história →</a>
+      </div>
+      <ol class="about__list">
+        <li data-reveal><span class="about__n num">01</span><div><h3>Sob especificação, amostra ou desenho</h3><p>Peças de borracha constantes ou não do catálogo, independentemente da quantidade solicitada.</p></div></li>
+        <li data-reveal><span class="about__n num">02</span><div><h3>Ferramentaria e equipe próprias</h3><p>Profissionais especializados e ferramental desenvolvido internamente, com prazos adequados a cada caso.</p></div></li>
+        <li data-reveal><span class="about__n num">03</span><div><h3>Fornecimento programado</h3><p>Atendemos a manutenção e fornecemos peças seriadas de forma programada para linhas de produção.</p></div></li>
+        <li data-reveal><span class="about__n num">04</span><div><h3>Qualidade certificada</h3><p>Sistema de gestão da qualidade certificado {site.empresa.certificacao}.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Produtos -->
+  <section class="section section--warm" id="produtos">
+    <div class="container grid-2 products">
+      <div class="products__intro">
+        <span class="eyebrow">Linha de produtos</span>
+        <h2 class="section-title">Cinco famílias de vedadores.</h2>
+        <span class="rule"></span>
+        <p class="lead products__lead">Cada peça é definida por função e aplicação: pressão, movimento, fluido e faixa térmica.</p>
+        <a class="btn btn--primary" href="/produtos">Todos os produtos</a>
+      </div>
+      <div class="products__list">
+        {produtos.map((p, i) => (
+          <a class="card products__item" href={`/produtos/${p.slug}`} data-reveal>
+            <span class="products__n num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{p.titulo}</h3>
+              <p>{p.resumo}</p>
+              <span class="link-arrow">Ver detalhes →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Materiais -->
+  <section class="section section--deep" id="materiais">
+    <div class="container">
+      <div data-reveal style="max-width:64ch">
+        <span class="eyebrow">Materiais</span>
+        <h2 class="section-title">Nove famílias de elastômeros, uma para cada condição de trabalho.</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="materials">
+        {materiais.map((m) => (
+          <article class="materials__item" data-reveal>
+            <div class="materials__head"><h3>{m.nome}</h3><span>{m.sigla}</span></div>
+            <p>{m.descricao}</p>
+            <div class="materials__temp num">{fmtTemp(m)}</div>
+          </article>
+        ))}
+      </div>
+      <div style="margin-top:40px"><a class="btn btn--on-image" href="/materiais">Comparar materiais</a></div>
+    </div>
+  </section>
+
+  <!-- Áreas -->
+  <section class="section areas" id="areas">
+    <div class="container" style="margin-bottom:48px">
+      <div data-reveal style="max-width:58ch">
+        <span class="eyebrow">Áreas de atuação</span>
+        <h2 class="section-title">Onde nossas peças trabalham.</h2>
+      </div>
+    </div>
+    <div class="marquee" aria-label={site.areas.join(', ')}>
+      <div class="marquee__track" aria-hidden="true">
+        {areasLoop.map((a) => <span class="marquee__item">{a}<i></i></span>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificação + clientes -->
+  <section class="section section--subtle">
+    <div class="container grid-2">
+      <div data-reveal>
+        <span class="eyebrow">Certificações</span>
+        <h2 class="section-title">Sistema de gestão da qualidade {site.empresa.certificacao}.</h2>
+        <span class="rule"></span>
+        <p class="lead" style="margin-top:28px">A certificação assegura aos nossos clientes produtos de qualidade e eficiência, com processos controlados do desenvolvimento à entrega.</p>
+        <a class="link-arrow" href="/certificacoes">Ver certificações →</a>
+      </div>
+      <div data-reveal>
+        <span class="eyebrow">Clientes</span>
+        <ul class="clients">
+          {site.clientes.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title="Fabricamos sob amostra ou desenho." text="Envie a especificação, a amostra ou o desenho da peça. Sem quantidade mínima." />
+</Base>
+
+<style>
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; background: var(--olibor-green-900); overflow: hidden; padding: 180px 0 80px; }
+  .hero__photo { position: absolute; inset: -10% 0 -10% 0; background: url('/img/hero-rocha.webp') center/cover no-repeat; opacity: .5; will-change: transform; }
+  .hero__veil { position: absolute; inset: 0; background: rgba(18,32,28,.62); }
+  .hero__content { position: relative; width: 100%; }
+  .hero__kicker { display: inline-block; font-family: var(--font-condensed); font-size: 13px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--olibor-sand-100); padding-bottom: 10px; border-bottom: 2px solid var(--color-accent); margin-bottom: 28px; }
+  .hero__title { color: #fff; font-size: var(--fs-display); line-height: .98; letter-spacing: -.01em; max-width: 18ch; }
+  .hero__title span { display: block; }
+  .hero__title-alt { color: var(--olibor-sand-100); }
+  .hero__lead { max-width: 58ch; margin: 32px 0 0; font-size: 20px; line-height: 1.6; color: rgba(255,255,255,.88); }
+  .hero__actions { margin-top: 44px; }
+
+  .stats { padding: 72px 0; border-top: 1px solid rgba(255,255,255,.14); }
+  .stats__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-8); }
+  .stats__value { display: flex; align-items: baseline; gap: 2px; font-family: var(--font-condensed); font-weight: 700; font-size: clamp(48px, 5vw, 72px); line-height: 1; color: #fff; }
+  .stats__suffix { color: var(--olibor-red-300); }
+  .stats__label { margin-top: 12px; color: rgba(255,255,255,.76); max-width: 24ch; line-height: 1.5; }
+
+  .about .link-arrow { margin-top: var(--space-4); }
+  .about__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--border-default); }
+  .about__list li { display: grid; grid-template-columns: 56px 1fr; gap: var(--space-4); padding: var(--space-6) 0; border-bottom: 1px solid var(--border-default); }
+  .about__n { font-family: var(--font-condensed); font-weight: 700; color: var(--color-accent); font-size: 15px; letter-spacing: .06em; padding-top: 4px; }
+  .about__list h3 { font-size: var(--fs-h4); }
+  .about__list p { margin: 6px 0 0; color: var(--neutral-600); }
+
+  .products__intro { position: sticky; top: 120px; }
+  .products__lead { margin: 28px 0 32px; color: var(--neutral-800); }
+  .products__list { display: flex; flex-direction: column; gap: 18px; }
+  .products__item { display: grid; grid-template-columns: 56px minmax(0,1fr); gap: var(--space-6); padding: 30px 32px; }
+  .products__n { font-family: var(--font-condensed); font-weight: 700; color: var(--color-accent); font-size: 15px; letter-spacing: .06em; padding-top: 6px; }
+  .products__item h3 { font-size: 27px; }
+  .products__item p { margin: 10px 0 14px; color: var(--neutral-600); }
+  @media (max-width: 720px) { .products__intro { position: static; } .products__item { grid-template-columns: 1fr; gap: var(--space-2); padding: 24px; } }
+
+  .materials { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 268px), 1fr)); gap: 20px; }
+  .materials__item { border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); padding: 26px; background: rgba(255,255,255,.03); transition: background var(--dur-base), border-color var(--dur-base); }
+  .materials__item:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.4); }
+  .materials__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .materials__head h3 { font-size: 23px; }
+  .materials__head span { font-family: var(--font-condensed); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--olibor-sand-100); white-space: nowrap; }
+  .materials__item p { margin: 12px 0 0; font-size: 15.5px; color: rgba(255,255,255,.78); }
+  .materials__temp { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.16); font-family: var(--font-condensed); font-size: 15px; font-weight: 600; letter-spacing: .04em; color: #fff; }
+
+  .areas { overflow: hidden; }
+  .marquee { border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); padding: 28px 0; overflow: hidden; }
+  .marquee__track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
+  .marquee__item { display: flex; align-items: center; gap: 34px; padding-right: 34px; font-family: var(--font-condensed); font-weight: 600; font-size: clamp(32px, 4vw, 56px); text-transform: uppercase; letter-spacing: .02em; color: var(--olibor-green-900); white-space: nowrap; }
+  .marquee__item i { display: inline-block; width: 12px; height: 12px; background: var(--color-accent); }
+  @keyframes marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+
+  .clients { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-4); }
+  .clients li { background: #fff; border: 1px solid var(--border-hairline); border-radius: var(--radius-md); min-height: 96px; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--space-4); font-family: var(--font-condensed); font-weight: 600; font-size: 20px; color: var(--olibor-green-800); }
+</style>

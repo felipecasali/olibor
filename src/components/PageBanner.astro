@@ -1,0 +1,20 @@
+---
+interface Props { title: string; lead?: string; trail?: { label: string; href?: string }[]; eyebrow?: string; }
+const { title, lead, trail = [], eyebrow } = Astro.props;
+---
+<section class="page-banner">
+  <div class="container">
+    {trail.length > 0 && (
+      <nav aria-label="Você está em">
+        <ol class="breadcrumb">
+          <li><a href="/">Home</a></li>
+          {trail.map((t) => <li>{t.href ? <a href={t.href}>{t.label}</a> : <span aria-current="page">{t.label}</span>}</li>)}
+        </ol>
+      </nav>
+    )}
+    {eyebrow && <span class="eyebrow on-dark" style="color:var(--olibor-sand-100)">{eyebrow}</span>}
+    <h1>{title}</h1>
+    <span class="rule"></span>
+    {lead && <p class="lead">{lead}</p>}
+  </div>
+</section>

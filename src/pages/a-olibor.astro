@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import CTABanner from '../components/CTABanner.astro';
+import site from '../data/site.json';
+const f = site.empresa.fundacao;
+---
+<Base title="A Olibor" description={`Olibor Borrachas e Retentores: fabricante de vedadores desde ${f}, com ferramentaria própria e peças sob especificação, amostra ou desenho.`}>
+  <PageBanner title="A Olibor" trail={[{ label: 'A Olibor' }]} lead={`Fabricante brasileira de vedadores e peças técnicas de borracha, em São Paulo desde ${f}.`} />
+
+  <section class="section">
+    <div class="container grid-2">
+      <div data-reveal>
+        <span class="eyebrow">Nossa história</span>
+        <h2 class="section-title">Desenvolvimento técnico como prioridade desde {f}.</h2>
+        <span class="rule"></span>
+      </div>
+      <div data-reveal>
+        <p class="lead">A Olibor Borrachas e Retentores Ltda iniciou suas atividades em {f} e, desde o princípio, tem como prioridade o desenvolvimento técnico de seus produtos.</p>
+        <p>A linha de produção segue rigorosos padrões de qualidade, para que as peças atendam às exigências de operação mais severas. Nossa principal atividade é a fabricação de vedadores para manutenção industrial, móbil, agrícola e de máquinas e equipamentos em geral.</p>
+        <p>Estamos aptos também a solucionar, em conjunto com nossos clientes, suas necessidades específicas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--subtle">
+    <div class="container">
+      <span class="eyebrow">Como trabalhamos</span>
+      <h2 class="section-title" style="max-width:22ch">Estrutura própria para atender manutenção e produção.</h2>
+      <span class="rule"></span>
+      <div class="grid-3" style="margin-top:48px">
+        <div class="card" data-reveal><h3>Ferramentaria própria</h3><p class="muted-p">Profissionais especializados e ferramental desenvolvido internamente.</p></div>
+        <div class="card" data-reveal><h3>Qualquer quantidade</h3><p class="muted-p">Peças de borracha, constantes ou não do site, mediante especificação, amostra ou desenho, com prazos adequados a cada caso.</p></div>
+        <div class="card" data-reveal><h3>Fornecimento programado</h3><p class="muted-p">Atendimento à manutenção e fornecimento de peças seriadas de forma programada para linhas de produção.</p></div>
+        <div class="card" data-reveal><h3>Desenvolvimento conjunto</h3><p class="muted-p">Necessidades particulares ou peças novas são desenvolvidas em conjunto com o cliente.</p></div>
+        <div class="card" data-reveal><h3>Qualidade certificada</h3><p class="muted-p">Sistema de gestão da qualidade {site.empresa.certificacao}.</p></div>
+        <div class="card card--dark" data-reveal><h3>Consulte-nos!</h3><p style="color:rgba(255,255,255,.8)">Tem uma necessidade específica? Fale com a nossa equipe técnica.</p><a class="link-arrow" style="color:#fff" href="/contato#orcamento">Solicitar orçamento →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title="Desenvolvemos peças específicas." text="Em conjunto com nossos clientes, para necessidades particulares." />
+</Base>
+<style>
+  .card h3 { font-size: var(--fs-h4); margin-bottom: var(--space-3); }
+  .muted-p { color: var(--neutral-600); margin: 0; }
+</style>

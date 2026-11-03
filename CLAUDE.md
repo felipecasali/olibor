@@ -1,0 +1,24 @@
+# Instruções para o Claude — site Olibor
+
+## Como editar conteúdo
+- Texto institucional, contatos, menu, áreas e clientes: `src/data/site.json`.
+- Produtos: `src/data/produtos.json` (cada item gera `/produtos/<slug>`; o slug não deve mudar depois de publicado).
+- Materiais: `src/data/materiais.json` (`min`/`max` em °C; `null` = sob especificação).
+- Páginas: `src/pages/*.astro`. Nova página → adicionar ao `nav` em `site.json` se for para o menu.
+- Imagens: `public/img/`, sempre otimizadas (WebP, ≤ 1600 px de largura).
+
+## Regras do design system Olibor
+- Cores, espaçamentos, raios e sombras só via variáveis de `src/styles/tokens.css`. Não editar esse arquivo à mão: ele é cópia do design system.
+- Verde `--olibor-green-800` = primário/superfícies; vermelho `--color-accent` = única cor de ação.
+- Tipografia: Barlow (corpo) + Barlow Condensed (títulos, nav, botões, eyebrows em caixa alta).
+- Sem gradientes decorativos, glassmorphism, emoji, cards com borda colorida à esquerda (exceto acordeão de materiais).
+- Hover de botão escurece um passo da rampa; nunca opacidade.
+- Animações: revelação por scroll (`data-reveal`), contadores (`data-count`), parallax (`data-parallax`); respeitar o interruptor do rodapé e `prefers-reduced-motion`.
+
+## Texto
+- Português do Brasil, voz institucional na 1ª pessoa do plural, registro técnico antes do comercial.
+- Unidades: `-30 °C a +100 °C`, vírgula decimal. Marcas: `NBR ISO 9001:2015`, `Viton®`.
+
+## Fluxo
+- Rodar `npm run build` antes de cada commit; o build deve passar sem erros.
+- Commits pequenos e descritivos em português; push na `main` publica na Vercel.

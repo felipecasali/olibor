@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import CTABanner from '../components/CTABanner.astro';
+import site from '../data/site.json';
+---
+<Base title="Áreas de atuação" description="A Olibor atende petróleo e gás, metalúrgica, máquinas pesadas, manutenção, farmacêutica, vedação industrial, bebidas, saneamento e agricultura.">
+  <PageBanner title="Áreas de atuação" trail={[{ label: 'Áreas de atuação' }]} lead="Atendemos diversos segmentos industriais com soluções de vedação para máquinas, equipamentos, sistemas pressurizados e outros." />
+
+  <section class="section">
+    <div class="container">
+      <ul class="areas-grid">
+        {site.areas.map((a, i) => (
+          <li data-reveal>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h2>{a}</h2>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CTABanner title="Seu segmento não está na lista?" text="Desenvolvemos vedadores para máquinas e equipamentos em geral. Consulte-nos." />
+</Base>
+<style>
+  .areas-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); border-top: 1px solid var(--border-default); border-left: 1px solid var(--border-default); }
+  .areas-grid li { border-right: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); padding: var(--space-10) var(--space-8); min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; transition: background var(--dur-base) var(--ease-standard); }
+  .areas-grid li:hover { background: var(--surface-warm-soft); }
+  .areas-grid span { font-family: var(--font-condensed); font-weight: 700; color: var(--color-accent); letter-spacing: .06em; }
+  .areas-grid h2 { font-size: clamp(28px, 2.6vw, 36px); text-transform: uppercase; letter-spacing: .01em; }
+</style>

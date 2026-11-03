@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import CTABanner from '../components/CTABanner.astro';
+import materiais from '../data/materiais.json';
+const t = (v: number | null) => (v === null ? '—' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v)} °C`);
+const comFaixa = materiais.filter((m) => m.min !== null);
+---
+<Base title="Materiais" description="Elastômeros utilizados pela Olibor: borracha natural, NBR, EPDM, neoprene, poliuretano, silicone, Viton® (FKM), lona impregnada e elastômeros alimentícios.">
+  <PageBanner title="Materiais" trail={[{ label: 'Materiais' }]} lead="A Olibor tem formulações desenvolvidas para os mais variados elastômeros. Abaixo, os mais utilizados na fabricação de vedadores e peças diversas." />
+
+  <section class="section">
+    <div class="container mat-layout">
+      <div class="acc">
+        {materiais.map((m, i) => (
+          <details class="acc__item" open={i === 1}>
+            <summary>
+              <span class="acc__name">{m.nome}</span>
+              <span class="acc__abbr">{m.sigla}</span>
+              <span class="acc__plus" aria-hidden="true">+</span>
+            </summary>
+            <div class="acc__body">
+              <p>{m.descricao}</p>
+              <dl>
+                <div><dt>Temperatura</dt><dd class="num">{m.min === null ? 'Sob especificação' : `${t(m.min)} a ${t(m.max)}`}</dd></div>
+                {m.indicado && <div><dt>Indicado</dt><dd>{m.indicado}</dd></div>}
+                {m.evitar && <div><dt>Não indicado</dt><dd>{m.evitar}</dd></div>}
+              </dl>
+            </div>
+          </details>
+        ))}
+      </div>
+      <aside class="mat-aside">
+        <table class="spec-table">
+          <caption>Faixas térmicas de trabalho</caption>
+          <thead><tr><th scope="col">Elastômero</th><th scope="col">Mínima</th><th scope="col">Máxima</th></tr></thead>
+          <tbody>
+            {comFaixa.map((m) => <tr><td>{m.sigla}</td><td>{t(m.min)}</td><td>{t(m.max)}</td></tr>)}
+          </tbody>
+        </table>
+        <p class="muted" style="margin-top:var(--space-4);font-size:var(--fs-xs)">Valores típicos de formulação; a especificação final depende da aplicação. Consulte-nos.</p>
+      </aside>
+    </div>
+  </section>
+
+  <CTABanner title="Não sabe qual elastômero usar?" text="Informe fluido, pressão e temperatura de trabalho: indicamos a formulação adequada." label="Falar com a engenharia" />
+</Base>
+<style>
+  .mat-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-12); align-items: start; }
+  .mat-aside { position: sticky; top: 100px; }
+  @media (max-width: 900px) { .mat-layout { grid-template-columns: 1fr; } .mat-aside { position: static; } }
+  .acc { display: grid; gap: var(--space-2); }
+  .acc__item { border: 1px solid var(--border-default); border-radius: var(--radius-sm); background: var(--surface-subtle); }
+  .acc__item[open] { background: var(--surface-card); border-left: 3px solid var(--color-accent); box-shadow: var(--shadow-card); }
+  .acc__item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: var(--space-4); padding: 18px 22px; }
+  .acc__item summary::-webkit-details-marker { display: none; }
+  .acc__name { font-family: var(--font-condensed); font-weight: 600; font-size: var(--fs-h4); text-transform: uppercase; letter-spacing: .02em; color: var(--text-heading); }
+  .acc__abbr { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-muted); }
+  .acc__plus { margin-left: auto; font-family: var(--font-condensed); font-size: 28px; line-height: 1; color: var(--color-accent); transition: transform var(--dur-base) var(--ease-standard); }
+  .acc__item[open] .acc__plus { transform: rotate(45deg); }
+  .acc__body { padding: 0 22px 22px; }
+  .acc__body p { color: var(--neutral-600); }
+  .acc__body dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-4); margin: var(--space-5) 0 0; padding-top: var(--space-4); border-top: 1px solid var(--border-hairline); }
+  .acc__body dt { font-family: var(--font-condensed); font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-muted); }
+  .acc__body dd { margin: 4px 0 0; font-weight: 500; color: var(--text-heading); }
+</style>

@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import produtos from '../../data/produtos.json';
+
+export function getStaticPaths() {
+  return produtos.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const outros = produtos.filter((o) => o.slug !== p.slug);
+---
+<Base title={p.titulo} description={p.resumo}>
+  <PageBanner title={p.titulo} eyebrow="Produto" trail={[{ label: 'Produtos', href: '/produtos' }, { label: p.titulo }]} lead={p.resumo} />
+
+  <section class="section">
+    <div class="container grid-2">
+      <div data-reveal>
+        <span class="eyebrow">Função</span>
+        <h2 class="section-title" style="font-size:clamp(28px,3vw,40px)">{p.funcao}</h2>
+        <span class="rule"></span>
+        <div class="btn-row" style="margin-top:36px">
+          <a class="btn btn--accent" href={`/contato?produto=${encodeURIComponent(p.titulo)}#orcamento`}>Orçar {p.titulo}</a>
+          <a class="btn btn--ghost" href="/materiais">Ver materiais</a>
+        </div>
+      </div>
+      <div data-reveal>
+        <table class="spec-table">
+          <caption>Especificação</caption>
+          <thead><tr><th scope="col">Item</th><th scope="col">Descrição</th></tr></thead>
+          <tbody>
+            <tr><td>Aplicações típicas</td><td>{p.aplicacao.join(' · ')}</td></tr>
+            <tr><td>Materiais usuais</td><td>{p.materiais.join(' · ')}</td></tr>
+            <tr><td>Fabricação</td><td>Sob especificação, amostra ou desenho</td></tr>
+            <tr><td>Quantidade</td><td>Sem quantidade mínima</td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="font-size:var(--fs-xs);margin-top:var(--space-4)">Dimensões, dureza e composição definidas conforme a aplicação. Consulte-nos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--subtle">
+    <div class="container">
+      <span class="eyebrow">Outros produtos</span>
+      <div class="grid-3" style="margin-top:24px">
+        {outros.map((o) => (
+          <a class="card" href={`/produtos/${o.slug}`} data-reveal>
+            <h3 style="font-size:24px">{o.titulo}</h3>
+            <p style="color:var(--neutral-600);margin:10px 0 14px">{o.resumo}</p>
+            <span class="link-arrow">Ver detalhes →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title="Precisa de uma peça fora do padrão?" text="Fabricamos sob amostra ou desenho, independentemente da quantidade." />
+</Base>

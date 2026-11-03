@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import CTABanner from '../components/CTABanner.astro';
+import site from '../data/site.json';
+---
+<Base title="Certificações" description="A Olibor Borrachas e Retentores possui sistema de gestão da qualidade certificado NBR ISO 9001:2015.">
+  <PageBanner title="Certificações" trail={[{ label: 'Certificações' }]} lead="Qualidade assegurada por sistema de gestão certificado." />
+
+  <section class="section">
+    <div class="container grid-2">
+      <div data-reveal>
+        <span class="eyebrow">Sistema de gestão da qualidade</span>
+        <h2 class="section-title">{site.empresa.certificacao}</h2>
+        <span class="rule"></span>
+        <p class="lead" style="margin-top:28px">A Olibor Borrachas e Retentores Ltda possui certificação {site.empresa.certificacao}, que assegura aos nossos clientes produtos de qualidade e eficiência.</p>
+        <p>O certificado pode ser solicitado à nossa equipe comercial.</p>
+        <a class="btn btn--primary" href={`mailto:${site.empresa.email}?subject=Certificado%20ISO%209001`}>Solicitar certificado</a>
+      </div>
+      <div class="cert" data-reveal role="img" aria-label={`Selo ${site.empresa.certificacao}`}>
+        <span class="cert__tag">Certificado</span>
+        <span class="cert__std">ISO 9001</span>
+        <span class="cert__ver num">NBR ISO 9001:2015</span>
+        <span class="cert__org">{site.empresa.razaoSocial}</span>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title="Qualidade certificada em cada peça." />
+</Base>
+<style>
+  .cert { aspect-ratio: 4 / 3; background: var(--surface-inverse); border-radius: var(--radius-md); padding: var(--space-10); display: flex; flex-direction: column; justify-content: flex-end; gap: var(--space-2); color: #fff; position: relative; overflow: hidden; }
+  .cert::before { content: ""; position: absolute; top: var(--space-10); left: var(--space-10); width: 64px; height: 3px; background: var(--color-accent); }
+  .cert__tag { font-family: var(--font-condensed); font-weight: 700; font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--olibor-sand-100); }
+  .cert__std { font-family: var(--font-condensed); font-weight: 700; font-size: clamp(56px, 7vw, 96px); line-height: .95; }
+  .cert__ver { font-family: var(--font-condensed); font-weight: 600; font-size: 22px; }
+  .cert__org { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); color: rgba(255,255,255,.76); }
+</style>

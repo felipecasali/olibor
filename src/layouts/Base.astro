@@ -1,0 +1,146 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
+
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+const fullTitle = title === 'Home' ? 'Olibor — Borrachas e Retentores desde 1979' : `${title} | Olibor`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const e = site.empresa;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: e.razaoSocial,
+  url: 'https://olibor.com.br',
+  logo: 'https://olibor.com.br/img/logo-olibor.png',
+  foundingDate: String(e.fundacao),
+  email: e.email,
+  telephone: '+55 11 2234-9111',
+  address: { '@type': 'PostalAddress', streetAddress: e.endereco.rua, addressLocality: e.endereco.cidade, addressRegion: e.endereco.uf, postalCode: e.endereco.cep, addressCountry: 'BR' },
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <meta name="theme-color" content="#1e342f" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/img/hero-rocha.webp', Astro.site)} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function () {
+      var off = false;
+      try { off = localStorage.getItem('olibor-motion') === 'off'; } catch (e) {}
+      document.documentElement.classList.add(off ? 'no-motion' : 'js-motion');
+    })();
+  </script>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <Header />
+  <main id="conteudo">
+    <slot />
+  </main>
+  <Footer />
+
+  <script>
+    const root = document.documentElement;
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const progress = document.querySelector<HTMLElement>('[data-progress]');
+    const parallax = document.querySelectorAll<HTMLElement>('[data-parallax]');
+    const motionOn = () => !root.classList.contains('no-motion') && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Reveal on scroll (IntersectionObserver + varredura de segurança)
+    const reveal = (el: Element) => el.classList.add('is-in');
+    const items = Array.from(document.querySelectorAll('[data-reveal]'));
+    // Escalonamento entre irmãos: 90 ms, máximo 6 passos
+    items.forEach((el) => {
+      const sibs = el.parentElement ? Array.from(el.parentElement.children).filter((c) => c.hasAttribute('data-reveal')) : [];
+      const i = Math.min(sibs.indexOf(el), 5);
+      if (i > 0) (el as HTMLElement).style.transitionDelay = `${i * 90}ms`;
+    });
+    const io = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { reveal(en.target); io?.unobserve(en.target); } }), { threshold: 0.08, rootMargin: '0px 0px -12% 0px' })
+      : null;
+    items.forEach((el) => (io ? io.observe(el) : reveal(el)));
+    const sweep = () => {
+      const line = innerHeight * 0.88;
+      items.forEach((el) => { if (!el.classList.contains('is-in') && el.getBoundingClientRect().top < line) reveal(el); });
+    };
+
+    // Contadores
+    const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+    const runCount = (el: HTMLElement) => {
+      const target = Number(el.dataset.count);
+      if (!motionOn() || !target) { el.textContent = String(target); return; }
+      const t0 = performance.now();
+      const step = (t: number) => {
+        const p = Math.min((t - t0) / 1100, 1);
+        el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const cio = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { runCount(en.target as HTMLElement); cio.unobserve(en.target); } }), { threshold: 0.4 });
+    counters.forEach((c) => cio.observe(c));
+
+    // Header compacto, progresso e parallax
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY;
+        header?.classList.toggle('is-compact', y > 90);
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (progress) progress.style.width = `${max > 0 ? (y / max) * 100 : 0}%`;
+        if (motionOn()) parallax.forEach((p) => (p.style.transform = `translate3d(0, ${Math.min(y, innerHeight * 1.2) * 0.22}px, 0)`));
+        sweep();
+        ticking = false;
+      });
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Menu mobile
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const nav = document.getElementById('main-nav');
+    toggle?.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      toggle.setAttribute('aria-expanded', String(open));
+      nav?.classList.toggle('is-open', open);
+    });
+    nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { toggle?.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); }));
+
+    // Interruptor de animações
+    const mt = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
+    const syncMt = () => {
+      const on = !root.classList.contains('no-motion');
+      if (mt) { mt.textContent = `Animações: ${on ? 'ligadas' : 'desligadas'}`; mt.setAttribute('aria-pressed', String(on)); }
+    };
+    mt?.addEventListener('click', () => {
+      const turnOff = !root.classList.contains('no-motion');
+      root.classList.toggle('no-motion', turnOff);
+      root.classList.toggle('js-motion', !turnOff);
+      try { localStorage.setItem('olibor-motion', turnOff ? 'off' : 'on'); } catch (e) {}
+      if (turnOff) { items.forEach(reveal); parallax.forEach((p) => (p.style.transform = '')); }
+      syncMt();
+    });
+    syncMt();
+  </script>
+</body>
+</html>

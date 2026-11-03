@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import produtos from '../../data/produtos.json';
+---
+<Base title="Produtos" description="Retentores, raspadores, gaxetas, anéis O'Ring e jogos Chevron fabricados pela Olibor em NBR, EPDM, Viton®, poliuretano, silicone e outros elastômeros.">
+  <PageBanner title="Nossos produtos" trail={[{ label: 'Produtos' }]} lead="Selecione uma das linhas abaixo. Também fabricamos peças fora do catálogo, sob amostra ou desenho." />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        {produtos.map((p, i) => (
+          <a class="card prod" href={`/produtos/${p.slug}`} data-reveal>
+            <span class="prod__n num">{String(i + 1).padStart(2, '0')}</span>
+            <h2>{p.titulo}</h2>
+            <p>{p.resumo}</p>
+            <div class="prod__tags">{p.materiais.map((m) => <span class="badge">{m}</span>)}</div>
+            <span class="link-arrow">Ver detalhes →</span>
+          </a>
+        ))}
+        <div class="card card--dark prod" data-reveal>
+          <span class="prod__n num" style="color:var(--olibor-red-300)">+</span>
+          <h2 style="color:#fff">Peças especiais</h2>
+          <p style="color:rgba(255,255,255,.8)">Peças de borracha constantes ou não do site, independentemente da quantidade, mediante especificação, amostra ou desenho.</p>
+          <a class="link-arrow" style="color:#fff" href="/contato#orcamento">Consulte-nos →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title="Fabricamos sob amostra ou desenho." text="Envie a especificação, a amostra ou o desenho da peça." />
+</Base>
+<style>
+  .prod { display: flex; flex-direction: column; gap: var(--space-3); }
+  .prod__n { font-family: var(--font-condensed); font-weight: 700; color: var(--color-accent); font-size: 15px; letter-spacing: .06em; }
+  .prod h2 { font-size: 28px; }
+  .prod p { color: var(--neutral-600); margin: 0; flex: 1; }
+  .prod__tags { display: flex; flex-wrap: wrap; gap: 6px; margin: var(--space-2) 0; }
+  .prod .link-arrow { align-self: flex-start; }
+</style>

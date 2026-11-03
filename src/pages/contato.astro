@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import site from '../data/site.json';
+import produtos from '../data/produtos.json';
+import materiais from '../data/materiais.json';
+const e = site.empresa;
+---
+<Base title="Contato e orçamento" description="Solicite um orçamento de vedadores e peças de borracha à Olibor. Tel. (11) 2234-9111 · olibor@olibor.com.br · Cachoeirinha, São Paulo/SP.">
+  <PageBanner title="Contato e orçamento" trail={[{ label: 'Contato' }]} lead="Fabricamos independentemente das quantidades solicitadas, mediante especificação, amostra ou desenho." />
+
+  <section class="section" id="orcamento">
+    <div class="container contact">
+      <div>
+        <span class="eyebrow">Fale conosco</span>
+        <h2 class="section-title" style="font-size:clamp(30px,3vw,40px)">Solicite um orçamento</h2>
+        <span class="rule"></span>
+
+        <form class="quote" data-quote novalidate>
+          <div class="quote__grid">
+            <div class="field">
+              <label for="empresa">Empresa <span class="req">*</span></label>
+              <input id="empresa" name="empresa" required autocomplete="organization" placeholder="Razão social" />
+              <span class="error" hidden>Informe a empresa.</span>
+            </div>
+            <div class="field">
+              <label for="nome">Contato <span class="req">*</span></label>
+              <input id="nome" name="nome" required autocomplete="name" placeholder="Nome" />
+              <span class="error" hidden>Informe seu nome.</span>
+            </div>
+            <div class="field">
+              <label for="email">E-mail <span class="req">*</span></label>
+              <input id="email" name="email" type="email" required autocomplete="email" placeholder="compras@empresa.com.br" />
+              <span class="error" hidden>Informe um e-mail válido.</span>
+            </div>
+            <div class="field">
+              <label for="telefone">Telefone</label>
+              <input id="telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(11) 0000-0000" />
+            </div>
+            <div class="field">
+              <label for="produto">Produto</label>
+              <select id="produto" name="produto">
+                <option value="">Selecione</option>
+                {produtos.map((p) => <option>{p.titulo}</option>)}
+                <option>Peça especial / sob desenho</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="material">Material</label>
+              <select id="material" name="material">
+                <option value="">Selecione</option>
+                {materiais.map((m) => <option>{m.nome}</option>)}
+                <option>Não sei / indicar</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="quantidade">Quantidade</label>
+              <input id="quantidade" name="quantidade" placeholder="ex. 40 peças" />
+              <span class="hint">Sem quantidade mínima.</span>
+            </div>
+            <div class="field">
+              <label for="area">Área de atuação</label>
+              <select id="area" name="area">
+                <option value="">Selecione</option>
+                {site.areas.map((a) => <option>{a}</option>)}
+                <option>Outra</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="margin-top:20px">
+            <label for="mensagem">Especificação da peça <span class="req">*</span></label>
+            <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Medidas, aplicação, pressão e temperatura de trabalho, fluido — ou informe que enviará amostra/desenho."></textarea>
+            <span class="error" hidden>Descreva a peça ou a necessidade.</span>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Não preencha <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+          <label class="check" style="margin-top:20px">
+            <input type="checkbox" name="consentimento" required />
+            <span>Autorizo a Olibor a usar estes dados para responder a este pedido. <a href="/privacidade">Política de privacidade</a>.</span>
+          </label>
+          <div class="quote__actions">
+            <button class="btn btn--accent btn--lg" type="submit">Enviar pedido</button>
+            <p class="quote__status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <aside class="card card--dark contact__card">
+        <h3>{e.razaoSocial}</h3>
+        <address>
+          {e.endereco.rua}<br />
+          {e.endereco.bairro} — {e.endereco.cidade}/{e.endereco.uf}<br />
+          CEP {e.endereco.cep}
+        </address>
+        <dl>
+          <div><dt>Telefone</dt><dd>{e.telefones.map((t, i) => <><a href={`tel:+55${t.replace(/\D/g, '')}`}>{t}</a>{i < e.telefones.length - 1 && ' / '}</>)}</dd></div>
+          <div><dt>E-mail</dt><dd><a href={`mailto:${e.email}`}>{e.email}</a></dd></div>
+          <div><dt>Horário</dt><dd>{e.horario}</dd></div>
+        </dl>
+        <a class="btn btn--on-image" href={e.mapaUrl} target="_blank" rel="noopener">Abrir no mapa</a>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ email: e.email }}>
+  const form = document.querySelector('[data-quote]');
+  const status = form.querySelector('.quote__status');
+  const params = new URLSearchParams(location.search);
+  if (params.get('produto')) form.produto.value = params.get('produto');
+
+  const validate = () => {
+    let ok = true;
+    form.querySelectorAll('[required]').forEach((el) => {
+      const bad = el.type === 'checkbox' ? !el.checked : !el.value.trim() || (el.type === 'email' && !/^\S+@\S+\.\S+$/.test(el.value));
+      el.setAttribute('aria-invalid', String(bad));
+      const err = el.parentElement.querySelector('.error');
+      if (err) err.hidden = !bad;
+      if (bad) ok = false;
+    });
+    return ok;
+  };
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    if (!validate()) { status.textContent = 'Revise os campos destacados.'; return; }
+    const data = Object.fromEntries(new FormData(form));
+    const btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    status.textContent = 'Enviando…';
+    try {
+      const r = await fetch('/api/orcamento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      if (!r.ok) throw new Error(String(r.status));
+      form.reset();
+      status.textContent = 'Pedido recebido. Retornaremos em horário comercial.';
+    } catch (err) {
+      const body = `Empresa: ${data.empresa}\nContato: ${data.nome}\nE-mail: ${data.email}\nTelefone: ${data.telefone}\nProduto: ${data.produto}\nMaterial: ${data.material}\nQuantidade: ${data.quantidade}\nÁrea: ${data.area}\n\n${data.mensagem}`;
+      const href = `mailto:${email}?subject=${encodeURIComponent('Orçamento — ' + data.empresa)}&body=${encodeURIComponent(body)}`;
+      status.innerHTML = `Não foi possível enviar pelo site. <a href="${href}">Enviar por e-mail</a> ou ligue (11) 2234-9111.`;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .contact { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-12); align-items: start; }
+  @media (max-width: 900px) { .contact { grid-template-columns: 1fr; } }
+  .quote { margin-top: var(--space-8); }
+  .quote__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 20px; }
+  .quote__actions { margin-top: var(--space-6); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6); }
+  .quote__status { margin: 0; font-size: var(--fs-sm); color: var(--olibor-green-800); }
+  .hp { position: absolute; left: -9999px; }
+  .contact__card { position: sticky; top: 100px; padding: var(--space-8); }
+  .contact__card h3 { font-size: var(--fs-h3); margin-bottom: var(--space-5); }
+  .contact__card address { font-style: normal; color: rgba(255,255,255,.84); margin-bottom: var(--space-6); }
+  .contact__card dl { margin: 0 0 var(--space-8); display: grid; gap: var(--space-4); padding-top: var(--space-6); border-top: 1px solid var(--border-inverse); }
+  .contact__card dt { font-family: var(--font-condensed); font-size: var(--fs-xs); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: rgba(255,255,255,.62); }
+  .contact__card dd { margin: 4px 0 0; color: #fff; }
+  .contact__card a:not(.btn) { color: #fff; }
+  @media (max-width: 900px) { .contact__card { position: static; } }
+</style>

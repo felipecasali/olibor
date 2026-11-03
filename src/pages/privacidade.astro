@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import site from '../data/site.json';
+const e = site.empresa;
+---
+<Base title="Privacidade" description="Política de privacidade e cookies do site da Olibor Borrachas e Retentores.">
+  <PageBanner title="Privacidade e cookies" trail={[{ label: 'Privacidade' }]} />
+  <section class="section">
+    <div class="container prose">
+      <h2>Dados coletados</h2>
+      <p>Este site coleta apenas os dados que você informa no formulário de orçamento (empresa, nome, e-mail, telefone e descrição da peça). Eles são usados exclusivamente para responder ao seu pedido, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+      <h2>Cookies</h2>
+      <p>O site não utiliza cookies de publicidade nem de rastreamento. A única informação guardada no seu navegador é a preferência de animações (ligadas ou desligadas), armazenada localmente.</p>
+      <h2>Seus direitos</h2>
+      <p>Para consultar, corrigir ou excluir seus dados, escreva para <a href={`mailto:${e.email}`}>{e.email}</a>.</p>
+      <p class="muted">{e.razaoSocial} · {e.endereco.rua}, {e.endereco.bairro} — {e.endereco.cidade}/{e.endereco.uf}</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .prose { max-width: 72ch; }
+  .prose h2 { font-size: var(--fs-h3); margin: var(--space-10) 0 var(--space-3); }
+  .prose h2:first-child { margin-top: 0; }
+</style>

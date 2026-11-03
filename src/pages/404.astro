@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+---
+<Base title="Página não encontrada" description="A página solicitada não existe.">
+  <PageBanner title="Página não encontrada" lead="O endereço pode ter mudado com o novo site." />
+  <section class="section">
+    <div class="container btn-row">
+      <a class="btn btn--primary" href="/">Ir para a home</a>
+      <a class="btn btn--ghost" href="/produtos">Ver produtos</a>
+      <a class="btn btn--ghost" href="/contato">Contato</a>
+    </div>
+  </section>
+</Base>
