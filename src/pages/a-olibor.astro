@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageBanner from '../components/PageBanner.astro';
 import CTABanner from '../components/CTABanner.astro';
 import site from '../data/site.json';
+import cert from '../data/certificacoes.json';
 const f = site.empresa.fundacao;
 ---
 <Base title="A Olibor" description={`Olibor Borrachas e Retentores: fabricante de vedadores desde ${f}, com ferramentaria própria e peças sob especificação, amostra ou desenho.`}>
@@ -30,7 +31,7 @@ const f = site.empresa.fundacao;
       <span class="rule"></span>
       <div class="grid-3" style="margin-top:48px">
         <div class="card" data-reveal><h3>Ferramentaria própria</h3><p class="muted-p">Profissionais especializados e ferramental desenvolvido internamente.</p></div>
-        <div class="card" data-reveal><h3>Qualquer quantidade</h3><p class="muted-p">Peças de borracha, constantes ou não do site, mediante especificação, amostra ou desenho, com prazos adequados a cada caso.</p></div>
+        <div class="card" data-reveal><h3>Sob especificação</h3><p class="muted-p">Peças de borracha, constantes ou não do site, mediante especificação, amostra ou desenho, com prazos adequados a cada caso.</p></div>
         <div class="card" data-reveal><h3>Fornecimento programado</h3><p class="muted-p">Atendimento à manutenção e fornecimento de peças seriadas de forma programada para linhas de produção.</p></div>
         <div class="card" data-reveal><h3>Desenvolvimento conjunto</h3><p class="muted-p">Necessidades particulares ou peças novas são desenvolvidas em conjunto com o cliente.</p></div>
         <div class="card" data-reveal><h3>Qualidade certificada</h3><p class="muted-p">Sistema de gestão da qualidade {site.empresa.certificacao}.</p></div>
@@ -39,9 +40,24 @@ const f = site.empresa.fundacao;
     </div>
   </section>
 
+  <section class="section section--green" id="politica-da-qualidade">
+    <div class="container policy" data-reveal>
+      <span class="eyebrow">Política da Qualidade</span>
+      <blockquote>
+        <p>{cert.politica.texto}</p>
+      </blockquote>
+      <span class="policy__date">São Paulo, {cert.politica.data} · <a href="/certificacoes">Certificações</a></span>
+    </div>
+  </section>
+
   <CTABanner title="Desenvolvemos peças específicas." text="Em conjunto com nossos clientes, para necessidades particulares." />
 </Base>
 <style>
+  .policy { max-width: 900px; }
+  .policy blockquote { margin: var(--space-4) 0 0; padding: 0; }
+  .policy blockquote p { font-family: var(--font-condensed); font-weight: 500; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.3; color: #fff; margin: 0; }
+  .policy__date { display: block; margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); color: rgba(255,255,255,.72); }
+  .policy__date a { color: #fff; }
   .card h3 { font-size: var(--fs-h4); margin-bottom: var(--space-3); }
   .muted-p { color: var(--neutral-600); margin: 0; }
 </style>

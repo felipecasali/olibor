@@ -6,7 +6,7 @@ import materiais from '../data/materiais.json';
 const t = (v: number | null) => (v === null ? '—' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v)} °C`);
 const comFaixa = materiais.filter((m) => m.min !== null);
 ---
-<Base title="Materiais" description="Elastômeros utilizados pela Olibor: borracha natural, NBR, EPDM, neoprene, poliuretano, silicone, Viton® (FKM), lona impregnada e elastômeros alimentícios.">
+<Base title="Materiais" description="Elastômeros utilizados pela Olibor: borracha natural, NBR, EPDM, neoprene, poliuretano, silicone, Viton® (FKM), lona impregnada e borracha atóxica.">
   <PageBanner title="Materiais" trail={[{ label: 'Materiais' }]} lead="A Olibor tem formulações desenvolvidas para os mais variados elastômeros. Abaixo, os mais utilizados na fabricação de vedadores e peças diversas." />
 
   <section class="section">

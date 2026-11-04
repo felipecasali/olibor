@@ -32,13 +32,40 @@ const outros = produtos.filter((o) => o.slug !== p.slug);
             <tr><td>Aplicações típicas</td><td>{p.aplicacao.join(' · ')}</td></tr>
             <tr><td>Materiais usuais</td><td>{p.materiais.join(' · ')}</td></tr>
             <tr><td>Fabricação</td><td>Sob especificação, amostra ou desenho</td></tr>
-            <tr><td>Quantidade</td><td>Sem quantidade mínima</td></tr>
           </tbody>
         </table>
         <p class="muted" style="font-size:var(--fs-xs);margin-top:var(--space-4)">Dimensões, dureza e composição definidas conforme a aplicação. Consulte-nos.</p>
       </div>
     </div>
   </section>
+
+  {p.perfis && (
+    <section class="section section--tight" id="perfis">
+      <div class="container perfis">
+        <div class="perfis__head" data-reveal>
+          <span class="eyebrow">Perfis</span>
+          <h2 class="section-title" style="font-size:clamp(28px,3vw,40px)">Perfis de {p.titulo.toLowerCase()} Olibor</h2>
+          <span class="rule"></span>
+          <p class="muted" style="margin-top:24px">Informe o código do perfil no pedido de orçamento. Outros perfis sob amostra ou desenho.</p>
+          <ul class="perfis__codigos" aria-label={`Códigos de perfis de ${p.titulo.toLowerCase()}`}>
+            {p.perfis.codigos.map((c) => <li>{c}</li>)}
+          </ul>
+        </div>
+        <figure class="perfis__fig" data-reveal>
+          <a href={`/img/perfis/${p.perfis.imagem}.webp`} target="_blank" rel="noopener">
+            <img
+              src={`/img/perfis/${p.perfis.imagem}${p.perfis.srcset ? '-700' : ''}.webp`}
+              srcset={p.perfis.srcset ? `/img/perfis/${p.perfis.imagem}-700.webp 700w, /img/perfis/${p.perfis.imagem}.webp ${p.perfis.largura}w` : undefined}
+              sizes="(max-width: 900px) 100vw, 640px"
+              width={p.perfis.largura} height={p.perfis.altura}
+              alt={`Desenhos em corte dos perfis de ${p.titulo.toLowerCase()} Olibor: ${p.perfis.codigos.join(', ')}`}
+              loading="lazy" decoding="async" />
+          </a>
+          <figcaption class="muted">Desenhos em corte, sem escala. <a href={`/img/perfis/${p.perfis.imagem}.webp`} target="_blank" rel="noopener">Ampliar ↗</a></figcaption>
+        </figure>
+      </div>
+    </section>
+  )}
 
   <section class="section section--subtle">
     <div class="container">
@@ -55,5 +82,15 @@ const outros = produtos.filter((o) => o.slug !== p.slug);
     </div>
   </section>
 
-  <CTABanner title="Precisa de uma peça fora do padrão?" text="Fabricamos sob amostra ou desenho, independentemente da quantidade." />
+  <CTABanner title="Precisa de uma peça fora do padrão?" text="Fabricamos sob especificação, amostra ou desenho." />
 </Base>
+<style>
+  .perfis { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--space-12); align-items: start; }
+  .perfis__codigos { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .perfis__codigos li { font-family: var(--font-condensed); font-weight: var(--fw-semibold); font-size: var(--fs-sm); letter-spacing: .02em; padding: 4px 10px; border: 1px solid var(--border-default); border-radius: var(--radius-sm); color: var(--text-heading); font-variant-numeric: tabular-nums; }
+  .perfis__fig { margin: 0; }
+  .perfis__fig > a { display: block; background: #fff; border: 1px solid var(--border-default); border-radius: var(--radius-sm); padding: var(--space-4); }
+  .perfis__fig img { display: block; width: 100%; height: auto; }
+  .perfis__fig figcaption { font-size: var(--fs-xs); margin-top: var(--space-3); }
+  @media (max-width: 900px) { .perfis { grid-template-columns: 1fr; gap: var(--space-8); } }
+</style>

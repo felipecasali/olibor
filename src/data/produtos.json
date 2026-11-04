@@ -5,7 +5,14 @@
     "resumo": "Vedador de eixo rotativo para baixa pressão: retém a graxa ou o óleo que lubrifica o sistema e impede a entrada de resíduos.",
     "aplicacao": ["Eixos rotativos", "Caixas de engrenagem e redutores", "Mancais e cubos de roda"],
     "funcao": "Vedação dinâmica radial em eixos rotativos sob baixa pressão.",
-    "materiais": ["NBR", "FKM", "VMQ", "PU"]
+    "materiais": ["NBR", "FKM", "VMQ", "PU"],
+    "perfis": {
+      "imagem": "retentor",
+      "largura": 1338,
+      "altura": 1614,
+      "srcset": true,
+      "codigos": ["RA-11", "RA-12", "RA-13", "RA-14", "RA-15", "RA-21", "RA-22", "RA-23", "RA-24", "RA-25", "RA-26", "RA-27", "RB-11", "RB-12", "RB-13", "RB-14", "RE-11", "RE-12", "BR-11", "BR-12", "BR-13", "BR-14", "RL-11", "RL-12", "RL-13", "RL-14"]
+    }
   },
   {
     "slug": "raspador",
@@ -13,7 +20,14 @@
     "resumo": "Vedador para proteção de cilindros hidráulicos e pneumáticos contra a entrada de impurezas.",
     "aplicacao": ["Hastes de cilindros hidráulicos", "Cilindros pneumáticos", "Máquinas expostas a poeira e lama"],
     "funcao": "Limpeza da haste no movimento de retorno, protegendo vedações internas.",
-    "materiais": ["PU", "NBR", "FKM"]
+    "materiais": ["PU", "NBR", "FKM"],
+    "perfis": {
+      "imagem": "raspador",
+      "largura": 501,
+      "altura": 95,
+      "srcset": false,
+      "codigos": ["AR-1", "AR-2", "AR-3", "AR-4", "AR-5", "ARP"]
+    }
   },
   {
     "slug": "gaxeta",
@@ -21,7 +35,14 @@
     "resumo": "Vedadores com perfis próprios que mantêm a pressão interna de sistemas hidráulicos e pneumáticos, em movimentos alternativos e rotativos de baixa velocidade.",
     "aplicacao": ["Cilindros hidráulicos", "Cilindros pneumáticos", "Bombas e válvulas"],
     "funcao": "Vedação dinâmica de haste e pistão sob pressão.",
-    "materiais": ["NBR", "PU", "FKM", "Lona impregnada"]
+    "materiais": ["NBR", "PU", "FKM", "Lona impregnada"],
+    "perfis": {
+      "imagem": "gaxeta",
+      "largura": 506,
+      "altura": 736,
+      "srcset": false,
+      "codigos": ["GS", "GZ", "GUD", "GCP", "GW", "GU-1", "GU-2", "GU-3", "GU-4", "GU-5", "GU-6", "GU-7", "GU-8", "GU-9", "GU-10", "GU-11", "GU-12", "GU-13", "GU-14", "GU-15", "GU-16", "GU-17", "GU-18", "GU-19", "GU-20", "GU-21", "GE-1", "GE-2", "GE-3", "GE-4", "GL-1", "GL-2", "GL-3", "GL-4", "GL-5", "GL-6", "GUA-1", "GUA-2", "GV-1", "GV-2"]
+    }
   },
   {
     "slug": "anel-oring",

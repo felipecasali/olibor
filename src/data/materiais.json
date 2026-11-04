@@ -7,5 +7,5 @@
   { "nome": "Silicone", "sigla": "VMQ", "min": -60, "max": 200, "descricao": "Ampla faixa térmica e boa inércia química; baixa resistência mecânica.", "indicado": null, "evitar": null },
   { "nome": "Fluoroelastômero Viton®", "sigla": "FKM", "min": -20, "max": 200, "descricao": "Alta resistência térmica e química para aplicações severas, inclusive ácidos e solventes.", "indicado": null, "evitar": null },
   { "nome": "Tecido impregnado com elastômero", "sigla": "Lona", "min": null, "max": null, "descricao": "Lona impregnada com NBR ou Viton®, para jogos Chevron em sistemas de alta pressão.", "indicado": "Jogos Chevron", "evitar": null },
-  { "nome": "Elastômeros alimentícios", "sigla": "Alim.", "min": null, "max": null, "descricao": "Formulações atóxicas para contato com alimentos e bebidas, conforme especificação do cliente.", "indicado": "Alimentos e bebidas", "evitar": null }
+  { "nome": "Borracha atóxica", "sigla": "Atóx.", "min": null, "max": null, "descricao": "Formulações atóxicas fabricadas conforme especificação do cliente. Não fornecemos peças para contato com alimentos, que exigem credenciamento FDA.", "indicado": null, "evitar": "Contato com alimentos" }
 ]
