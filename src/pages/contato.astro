@@ -6,7 +6,7 @@ import produtos from '../data/produtos.json';
 import materiais from '../data/materiais.json';
 const e = site.empresa;
 ---
-<Base title="Contato e orçamento" description="Solicite um orçamento de vedadores e peças de borracha à Olibor. Tel. (11) 2234-9111 · olibor@olibor.com.br · Cachoeirinha, São Paulo/SP.">
+<Base title="Contato e orçamento" description="Solicite um orçamento de vedadores e peças de borracha à Olibor. Tel. (11) 2234-9111 · WhatsApp (11) 99450-4509 · olibor@olibor.com.br · Cachoeirinha, São Paulo/SP.">
   <PageBanner title="Contato e orçamento" trail={[{ label: 'Contato' }]} lead="Fabricamos peças de borracha mediante especificação, amostra ou desenho." />
 
   <section class="section" id="orcamento">
@@ -93,6 +93,7 @@ const e = site.empresa;
         </address>
         <dl>
           <div><dt>Telefone</dt><dd>{e.telefones.map((t, i) => <><a href={`tel:+55${t.replace(/\D/g, '')}`}>{t}</a>{i < e.telefones.length - 1 && ' / '}</>)}</dd></div>
+          <div><dt>WhatsApp</dt><dd><a href={`https://wa.me/55${e.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener">{e.whatsapp}</a></dd></div>
           <div><dt>E-mail</dt><dd><a href={`mailto:${e.email}`}>{e.email}</a></dd></div>
           <div><dt>Horário</dt><dd>{e.horario}</dd></div>
         </dl>
@@ -135,7 +136,7 @@ const e = site.empresa;
     } catch (err) {
       const body = `Empresa: ${data.empresa}\nContato: ${data.nome}\nE-mail: ${data.email}\nTelefone: ${data.telefone}\nProduto: ${data.produto}\nMaterial: ${data.material}\nQuantidade: ${data.quantidade}\nÁrea: ${data.area}\n\n${data.mensagem}`;
       const href = `mailto:${email}?subject=${encodeURIComponent('Orçamento — ' + data.empresa)}&body=${encodeURIComponent(body)}`;
-      status.innerHTML = `Não foi possível enviar pelo site. <a href="${href}">Enviar por e-mail</a> ou ligue (11) 2234-9111.`;
+      status.innerHTML = `Não foi possível enviar pelo site. <a href="${href}">Enviar por e-mail</a> ou ligue (11) 2234-9111 / WhatsApp (11) 99450-4509.`;
     } finally {
       btn.disabled = false;
     }

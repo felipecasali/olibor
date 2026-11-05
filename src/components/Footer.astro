@@ -30,6 +30,7 @@ const ano = new Date().getFullYear();
       </address>
       <p>
         {e.telefones.map((t, i) => <><a href={`tel:+55${t.replace(/\D/g, '')}`}>{t}</a>{i < e.telefones.length - 1 && <br />}</>)}<br />
+        WhatsApp <a href={`https://wa.me/55${e.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener">{e.whatsapp}</a><br />
         <a href={`mailto:${e.email}`}>{e.email}</a>
       </p>
       <p class="site-footer__hours">{e.horario}</p>
