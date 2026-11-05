@@ -49,7 +49,7 @@ const dados = [
       <blockquote>
         <p>{cert.politica.texto}</p>
       </blockquote>
-      <span class="policy__date">São Paulo, {cert.politica.data}</span>
+      <span class="policy__date">São Paulo, {cert.politica.data} · <a href={cert.politica.pdf} target="_blank" rel="noopener" download>Baixar Política da Qualidade (PDF)</a></span>
     </div>
   </section>
 
@@ -82,4 +82,5 @@ const dados = [
   .policy blockquote { margin: var(--space-4) 0 0; padding: 0; }
   .policy blockquote p { font-family: var(--font-condensed); font-weight: 500; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.3; color: #fff; margin: 0; }
   .policy__date { display: block; margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); color: rgba(255,255,255,.72); }
+  .policy__date a { color: #fff; }
 </style>
